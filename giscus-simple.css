@@ -1,0 +1,115 @@
+@import url("https://giscus.app/themes/light.css");
+
+/* Mascot comments: deliberately simple, flat thread UI. */
+
+/* Hide discussion-level chrome. */
+.gsc-reactions,
+.gsc-header {
+  display: none !important;
+}
+
+/* Hide per-comment voting/reaction/reply controls, but keep any existing replies visible. */
+.gsc-comment-footer,
+.gsc-reply-box {
+  display: none !important;
+}
+
+/* Keep the composer in permanent Write mode and remove Markdown/preview chrome. */
+.gsc-comment-box-tabs,
+.gsc-comment-box-textarea-extras,
+.gsc-comment-box-bottom > .link-secondary {
+  display: none !important;
+}
+
+/* Strip away most GitHub card chrome. */
+.gsc-main,
+.gsc-comments,
+.gsc-timeline {
+  background: transparent !important;
+}
+
+.gsc-main {
+  padding: 0 !important;
+}
+
+.gsc-timeline {
+  margin: 0 0 18px !important;
+}
+
+.gsc-comment {
+  margin: 0 !important;
+}
+
+.gsc-comment > div {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+.gsc-comment-header {
+  padding-top: 12px !important;
+  padding-bottom: 4px !important;
+}
+
+.gsc-comment-author img {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* Tone down owner/association badges. */
+.gsc-comment-author > div {
+  display: none !important;
+}
+
+.gsc-comment-content {
+  padding-top: 4px !important;
+  padding-bottom: 14px !important;
+}
+
+/* Preserve existing nested replies if a thread already has them, but keep them visually quiet. */
+.gsc-replies {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #f0f1f2 !important;
+  border-radius: 0 !important;
+}
+
+/* Composer: one textarea + one button. */
+.gsc-comment-box {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.gsc-comment-box-main,
+.gsc-comment-box-write {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.gsc-comment-box-textarea {
+  min-height: 88px !important;
+  border: 1px solid #d7dce1 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  background: #ffffff !important;
+}
+
+.gsc-comment-box-bottom {
+  border: 0 !important;
+  padding: 8px 0 0 !important;
+  justify-content: flex-end !important;
+  background: transparent !important;
+}
+
+.gsc-comment-box-buttons {
+  margin-left: auto !important;
+}
+
+.gsc-comment-box-buttons .btn-primary {
+  border-radius: 7px !important;
+  box-shadow: none !important;
+}
