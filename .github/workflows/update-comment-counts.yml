@@ -1,0 +1,73 @@
+name: Update comment counts
+
+on:
+  workflow_dispatch:
+  discussion:
+    types: [created, deleted]
+  discussion_comment:
+    types: [created, edited, deleted]
+
+permissions:
+  contents: write
+  discussions: read
+
+jobs:
+  update-counts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build comment-counts.json
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api graphql --paginate --slurp \
+            -f owner="bluegraysky" \
+            -f name="mascot-comments" \
+            -f query='
+              query($owner: String!, $name: String!, $endCursor: String) {
+                repository(owner: $owner, name: $name) {
+                  discussions(first: 100, after: $endCursor) {
+                    nodes {
+                      title
+                      category {
+                        name
+                      }
+                      comments {
+                        totalCount
+                      }
+                    }
+                    pageInfo {
+                      hasNextPage
+                      endCursor
+                    }
+                  }
+                }
+              }
+            ' \
+          | jq '
+              [
+                .[].data.repository.discussions.nodes[]
+                | select(.category.name == "Mascot Comments")
+              ]
+              | map({
+                  key: .title,
+                  value: .comments.totalCount
+                })
+              | from_entries
+            ' > comment-counts.json
+
+      - name: Save updated counts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add comment-counts.json
+
+          if git diff --cached --quiet; then
+            echo "No comment-count changes."
+          else
+            git commit -m "Update comment counts"
+            git push
+          fi
